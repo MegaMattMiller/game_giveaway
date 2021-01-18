@@ -28,7 +28,6 @@ export default new Vuex.Store({
             return q.Get(ref);
           })
           .each(function(page) {
-            console.dir(page); // Logs the retrieved documents.
             if (page.length < 1) {
               reject(page);
             }
@@ -44,24 +43,6 @@ export default new Vuex.Store({
           });
       });
     }
-    // getData(context) {
-    //   return new Promise((resolve, reject) => {
-    //     let url = '/games.json';
-    //     fetch(url)
-    //       .then((response) => {
-    //         if (!response.ok) {
-    //           reject();
-    //         }
-    //         response.json().then((data) => {
-    //           context.commit('updateData', data);
-    //           resolve(data);
-    //         });
-    //       })
-    //       .catch((err) => {
-    //         reject(err);
-    //       });
-    //   });
-    // }
   },
   modules: {}
 });
