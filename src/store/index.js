@@ -73,6 +73,11 @@ export default new Vuex.Store({
                 data.games.push(element.data);
               }
             });
+            data.games.sort(function(a, b) {
+              var textA = a.title.toUpperCase();
+              var textB = b.title.toUpperCase();
+              return textA < textB ? -1 : textA > textB ? 1 : 0;
+            });
             context.commit('updateData', data);
             resolve(data);
           });
