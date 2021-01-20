@@ -14,7 +14,15 @@ const routes = [
   {
     path: '/add',
     name: 'Add',
-    component: Add
+    component: Add,
+    // eslint-disable-next-line no-unused-vars
+    beforeEnter: (to, from, next) => {
+      if (to.query.auth == process.env.VUE_APP_PASSWORD) {
+        next();
+      } else {
+        return false;
+      }
+    }
   }
 ];
 
