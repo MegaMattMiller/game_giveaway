@@ -20,8 +20,6 @@ export default {
   },
   methods: {
     handleSubmitClicked: function() {
-      console.log(this.gameName);
-      console.log(this.humbleUrl);
       if (this.gameName.trim == '' || this.humbleUrl.trim == '') {
         return;
       }

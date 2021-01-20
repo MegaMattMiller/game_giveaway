@@ -17,7 +17,6 @@ export default new Vuex.Store({
   actions: {
     markGameRedeemed(context, payload) {
       return new Promise((resolve) => {
-        console.log(payload.ref);
         var client = new faunadb.Client({
           secret: process.env.VUE_APP_APP_TOKEN,
           domain: 'db.fauna.com',
@@ -26,15 +25,12 @@ export default new Vuex.Store({
         client
           .query(q.Update(q.Ref(q.Collection('game-keys'), payload.ref), { data: { active: false } }))
           .then((ret) => {
-            console.log(ret);
             resolve(ret);
           });
       });
     },
     submitData(context, payload) {
       return new Promise((resolve) => {
-        console.log(payload.title);
-        console.log(payload.url);
         var client = new faunadb.Client({
           secret: process.env.VUE_APP_APP_TOKEN,
           domain: 'db.fauna.com',
@@ -44,7 +40,6 @@ export default new Vuex.Store({
           q.Create(q.Collection('game-keys'), { data: { title: payload.title, active: true, humble_url: payload.url } })
         );
         createP.then(function(response) {
-          console.log(response.ref); // Logs the ref to the console.
           resolve(response);
         });
       });
