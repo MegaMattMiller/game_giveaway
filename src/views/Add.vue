@@ -30,6 +30,8 @@ export default {
       this.$store.dispatch('submitData', payload).then(() => {
         this.$store.dispatch('getData').then(() => {
           this.loading = false;
+          this.gameName = '';
+          this.humbleUrl = '';
         });
       });
     }
