@@ -4,6 +4,7 @@
       <h1>Page for adding games!</h1>
       <b-form-input v-model="gameName" placeholder="Game Name"></b-form-input>
       <b-form-input v-model="humbleUrl" placeholder="Humble Gift URL"></b-form-input>
+      <b-form-input v-model="gameId" placeholder="Game ID"></b-form-input>
       <b-button variant="success" @click="handleSubmitClicked">Submit</b-button>
     </b-container>
   </b-overlay>
@@ -15,7 +16,8 @@ export default {
     return {
       loading: false,
       gameName: '',
-      humbleUrl: ''
+      humbleUrl: '',
+      gameId: ''
     };
   },
   methods: {
@@ -27,11 +29,13 @@ export default {
       var payload = {};
       payload.title = this.gameName;
       payload.url = this.humbleUrl;
+      payload.gameId = this.gameId;
       this.$store.dispatch('submitData', payload).then(() => {
         this.$store.dispatch('getData').then(() => {
           this.loading = false;
           this.gameName = '';
           this.humbleUrl = '';
+          this.gameId = '';
         });
       });
     }

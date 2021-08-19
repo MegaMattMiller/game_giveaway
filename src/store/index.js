@@ -37,7 +37,9 @@ export default new Vuex.Store({
           scheme: 'https'
         });
         var createP = client.query(
-          q.Create(q.Collection('game-keys'), { data: { title: payload.title, active: true, humble_url: payload.url } })
+          q.Create(q.Collection('game-keys'), {
+            data: { title: payload.title, active: true, humble_url: payload.url, gameId: payload.gameId }
+          })
         );
         createP.then(function(response) {
           resolve(response);

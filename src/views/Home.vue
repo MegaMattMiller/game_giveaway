@@ -5,6 +5,13 @@
       <h2>Let me know which games you redeem!</h2>
       <router-link v-if="hasAuth" :to="addGameUrl">Add Game</router-link>
       <b-card v-for="(game, index) in this.$store.state.data.games" :key="index" border-variant="dark">
+        <b-card-img
+          v-if="game.gameId != undefined"
+          v-bind:src="getGameBanner(game.gameId)"
+          :alt="game.title"
+          top
+          style="width: 400px;"
+        ></b-card-img>
         <b-card-title>{{ game.title }}</b-card-title>
         <b-button :href="game.humble_url">I'll take it!</b-button>
         <b-button :href="getSearchUrl(game.title)" class="details-button">What is this game?</b-button>
@@ -47,6 +54,9 @@ export default {
     });
   },
   methods: {
+    getGameBanner: function(gameId) {
+      return `https://cdn.cloudflare.steamstatic.com/steam/apps/${gameId}/header.jpg`;
+    },
     makeGameAsRedeemed: function(gameObject) {
       console.dir(gameObject);
       this.loading = true;
