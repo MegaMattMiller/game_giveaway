@@ -15,6 +15,20 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    setGameID(context, payload) {
+      return new Promise((resolve) => {
+        var client = new faunadb.Client({
+          secret: process.env.VUE_APP_APP_TOKEN,
+          domain: 'db.fauna.com',
+          scheme: 'https'
+        });
+        client
+          .query(q.Update(q.Ref(q.Collection('game-keys'), payload.ref), { data: { gameId: payload.gameId } }))
+          .then((ret) => {
+            resolve(ret);
+          });
+      });
+    },
     markGameRedeemed(context, payload) {
       return new Promise((resolve) => {
         var client = new faunadb.Client({

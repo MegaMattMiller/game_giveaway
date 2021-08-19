@@ -14,10 +14,19 @@
         ></b-card-img>
         <b-card-title>{{ game.title }}</b-card-title>
         <b-button :href="game.humble_url">I'll take it!</b-button>
-        <b-button :href="getSearchUrl(game.title)" class="details-button">What is this game?</b-button>
+        <b-button v-if="game.gameId == undefined" :href="getSearchUrl(game.title)" class="details-button"
+          >What is this game?</b-button
+        >
+        <b-button v-if="game.gameId != undefined" :href="getSteamDBUrl(game.gameId)" class="details-button"
+          >What is this game?</b-button
+        >
         <b-button v-if="hasAuth" @click="makeGameAsRedeemed(game)" class="details-button" variant="danger"
           >Mark Claimed</b-button
         >
+        <b-form v-if="hasAuth">
+          <b-form-input v-model="game.gameId" placeholder="Game ID"></b-form-input>
+          <b-button variant="success" @click="addGameID(game, game.gameId)">Submit</b-button>
+        </b-form>
       </b-card>
       <div class="footer-div">
         <a href="https://github.com/MegaMattMiller/game_giveaway" class="footer-logo"
@@ -68,9 +77,24 @@ export default {
         });
       });
     },
+    addGameID: function(gameObject, gameId) {
+      console.dir(gameObject);
+      this.loading = true;
+      var payload = {};
+      payload.ref = gameObject.ref;
+      payload.gameId = gameId;
+      this.$store.dispatch('setGameID', payload).then(() => {
+        this.$store.dispatch('getData').then(() => {
+          this.loading = false;
+        });
+      });
+    },
     getSearchUrl: function(gameTitle) {
       var searchUrl = `http://www.google.com/search?q=${encodeURIComponent(gameTitle)}+game+steam`;
       return searchUrl;
+    },
+    getSteamDBUrl: function(gameId) {
+      return `https://store.steampowered.com/app/${gameId}/`;
     }
   }
 };
