@@ -67,7 +67,7 @@ export default {
       if (game.humble_url.toLowerCase().includes('humblebundle.com')) {
         window.open(game.humble_url, '_blank');
       } else {
-        window.open(`https://store.steampowered.com/account/registerkey?key=` + game.url, '_blank'); //Url is probably steam key, go redeem.
+        window.open(`https://store.steampowered.com/account/registerkey?key=` + game.humble_url, '_blank'); //Url is probably steam key, go redeem.
       }
     },
     getGameBanner: function(gameId) {
