@@ -13,7 +13,7 @@
           style="width: 400px;"
         ></b-card-img>
         <b-card-title>{{ game.title }}</b-card-title>
-        <b-button :href="game.humble_url">I'll take it!</b-button>
+        <b-button @click="handleGameClicked(game)">I'll take it!</b-button>
         <b-button v-if="game.gameId == undefined" :href="getSearchUrl(game.title)" class="details-button"
           >What is this game?</b-button
         >
@@ -63,6 +63,13 @@ export default {
     });
   },
   methods: {
+    handleGameClicked: function(game) {
+      if (game.humble_url.toLowerCase().includes('humblebundle.com')) {
+        window.open(game.humble_url, '_blank');
+      } else {
+        window.open(`https://store.steampowered.com/account/registerkey?key=` + game.url, '_blank'); //Url is probably steam key, go redeem.
+      }
+    },
     getGameBanner: function(gameId) {
       return `https://cdn.cloudflare.steamstatic.com/steam/apps/${gameId}/header.jpg`;
     },
