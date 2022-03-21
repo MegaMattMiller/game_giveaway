@@ -62,6 +62,8 @@ export default new Vuex.Store({
     },
     getData(context) {
       return new Promise((resolve, reject) => {
+        var data = {};
+        data.games = [];
         var client = new faunadb.Client({
           secret: process.env.VUE_APP_APP_TOKEN,
           domain: 'db.fauna.com',
@@ -76,8 +78,6 @@ export default new Vuex.Store({
             if (page.length < 1) {
               reject(page);
             }
-            var data = {};
-            data.games = [];
             page.forEach((element) => {
               if (element.data.active) {
                 element.data.ref = element.ref.id;
@@ -90,8 +90,8 @@ export default new Vuex.Store({
               return textA < textB ? -1 : textA > textB ? 1 : 0;
             });
             context.commit('updateData', data);
-            resolve(data);
           });
+        resolve(data);
       });
     }
   }
