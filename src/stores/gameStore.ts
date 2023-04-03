@@ -29,7 +29,10 @@ export const gameStore = defineStore('gameStore', () => {
     const q = query(keysRef, where('active', '==', true), orderBy('title'), startAt(start), limit(count));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
-      foundGames.push(doc.data() as GameData);
+      const foundGame = doc.data() as GameData;
+      foundGame.docRef = doc.id;
+      console.log('foundGame', foundGame);
+      foundGames.push(foundGame);
     });
     games.value = [...foundGames];
   };
@@ -43,6 +46,11 @@ export const gameStore = defineStore('gameStore', () => {
     return docRef;
   };
 
+  const markGameAsClaimed = async (game: GameData) => {
+    const gameRef = doc(firestore, collectionName, game.docRef);
+    await setDoc(gameRef, { active: false, claimedAt: serverTimestamp() }, { merge: true });
+  };
+
   const createGameObject = (uid: string, gameName: string, gameUrl: string, gameId: number) => {
     const newCard: GameData = {
       active: true,
@@ -50,6 +58,7 @@ export const gameStore = defineStore('gameStore', () => {
       humble_url: gameUrl,
       title: gameName,
       uid: uid,
+      docRef: '',
     } as GameData;
     return newCard;
   };
@@ -58,5 +67,6 @@ export const gameStore = defineStore('gameStore', () => {
     games,
     addGame,
     getKeyRange,
+    markGameAsClaimed,
   };
 });
