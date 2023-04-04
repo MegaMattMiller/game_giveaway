@@ -3,9 +3,11 @@
     <img :src="getGameBanner(data.gameId)" alt="Game Logo" />
     <h2>{{ data.title }}</h2>
     <div class="buttons">
-      <FormKit type="button" @click="handleMark" v-if="isLoggedIn" outer-class="nav-button">Mark Claimed</FormKit>
       <FormKit type="button" @click="handleClaim" outer-class="nav-button">I'll take it!</FormKit>
       <FormKit type="button" @click="handleInfo" outer-class="nav-button">What is this game?</FormKit>
+      <FormKit type="button" @click="handleMark" v-if="isLoggedIn" outer-class="nav-button" input-class="claim-button"
+        >Mark Claimed</FormKit
+      >
     </div>
   </div>
 </template>
@@ -53,6 +55,12 @@ function handleMark() {
   emit('markClaimed', props.data);
 }
 </script>
+
+<style lang="scss">
+.claim-button {
+  background-color: red !important;
+}
+</style>
 
 <style lang="scss" scoped>
 @import '@/styles/mixins.scss';
