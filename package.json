@@ -22,7 +22,7 @@
     "@iconify/vue": "^4.1.1",
     "@vueuse/core": "^9.13.0",
     "faunadb": "^4.8.0",
-    "firebase": "^9.19.1",
+    "firebase": "^9.23.0",
     "minidenticons": "^2.0.2",
     "pinia": "^2.0.34",
     "vue": "^3.2.47",
